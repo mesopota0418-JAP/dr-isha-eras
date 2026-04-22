@@ -79,4 +79,11 @@ function formatMarkdown(text) {
             if (line.includes('|') && !line.includes('---')) {
                 const cols = line.split('|').filter(c => c.trim() !== '');
                 const tag = index === 0 ? 'th' : 'td';
-                htmlTable += '<tr>' + cols.map(c
+                htmlTable += '<tr>' + cols.map(c => `<${tag}>${c.trim()}</${tag}>`).join('') + '</tr>';
+            }
+        });
+        htmlTable += '</table>';
+        return text.replace(/\|(.|\n)*\|/g, htmlTable);
+    }
+    return text.replace(/\n/g, '<br>');
+}
