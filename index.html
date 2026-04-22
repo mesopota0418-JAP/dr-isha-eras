@@ -4,175 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dr. Isha Eras | EBM Debugger</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        /* --- [CSS Patch: Cyber-Medical Theme] --- */
-        :root {
-            --bg-color: #0A0E14;
-            --accent-cyan: #00F2FF;
-            --accent-violet: #7000FF;
-            --text-color: #E0E0E0;
-            --glow: 0 0 15px rgba(0, 242, 255, 0.5);
-            --font-main: 'Courier New', Courier, monospace;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-main);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        header {
-            padding: 1rem;
-            border-bottom: 1px solid var(--accent-cyan);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 242, 255, 0.05);
-            box-shadow: var(--glow);
-            z-index: 10;
-        }
-
-        .logo {
-            color: var(--accent-cyan);
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-shadow: var(--glow);
-        }
-
-        /* --- [Chat Layout] --- */
-        #chat-container {
-            flex: 1;
-            overflow-y: auto;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            scroll-behavior: smooth;
-        }
-
-        .message {
-            max-width: 80%;
-            padding: 1.2rem;
-            border-radius: 4px;
-            line-height: 1.6;
-            position: relative;
-            animation: fadeIn 0.4s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .ai-message {
-            align-self: flex-start;
-            border-left: 3px solid var(--accent-cyan);
-            background: rgba(0, 242, 255, 0.03);
-        }
-
-        .user-message {
-            align-self: flex-end;
-            border-right: 3px solid var(--accent-violet);
-            background: rgba(112, 0, 255, 0.08);
-            color: var(--accent-cyan);
-        }
-
-        /* --- [Result Presentation] --- */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1.5rem;
-            font-size: 0.85rem;
-            border: 1px solid rgba(0, 242, 255, 0.2);
-        }
-
-        th {
-            color: var(--accent-cyan);
-            background: rgba(0, 242, 255, 0.1);
-            text-align: left;
-            padding: 0.6rem;
-            border-bottom: 1px solid var(--accent-cyan);
-        }
-
-        td {
-            padding: 0.6rem;
-            border-bottom: 1px solid #1a1a1a;
-        }
-
-        .ebm-update {
-            color: var(--accent-cyan);
-            font-weight: bold;
-            text-shadow: 0 0 5px rgba(0, 242, 255, 0.5);
-        }
-
-        .stamp {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-12deg);
-            border: 4px double rgba(255, 0, 85, 0.4);
-            color: rgba(255, 0, 85, 0.4);
-            padding: 0.8rem;
-            font-size: 2.5rem;
-            font-weight: bold;
-            pointer-events: none;
-            display: none;
-            z-index: 5;
-            text-transform: uppercase;
-        }
-
-        /* --- [Controls] --- */
-        .controls {
-            padding: 2rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            background: linear-gradient(to top, var(--bg-color) 80%, transparent);
-        }
-
-        button {
-            background: transparent;
-            border: 1px solid var(--accent-cyan);
-            color: var(--accent-cyan);
-            padding: 0.8rem 2.5rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        button:hover {
-            background: var(--accent-cyan);
-            color: var(--bg-color);
-            box-shadow: var(--glow);
-            transform: scale(1.05);
-        }
-
-        button:active {
-            transform: scale(0.95);
-        }
+        /* CSSファイルが読み込めない場合のための最低限のバックアップ */
+        body { background-color: #0A0E14; color: #E0E0E0; font-family: monospace; }
+        .controls { display: flex; justify-content: center; gap: 2rem; padding: 2rem; }
+        button { border: 1px solid #00F2FF; background: transparent; color: #00F2FF; padding: 1rem 2rem; cursor: pointer; }
+        button:hover { background: #00F2FF; color: #0A0E14; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">DR. ISHA ERAS // EBM_OS_v1.1</div>
-    <div style="font-size: 0.65rem; color: #666;">ALL-CAUSE MORTALITY TRACKER: <span style="color: var(--accent-cyan);">ACTIVE</span></div>
+    <div class="logo">DR. ISHA ERAS // EBM_OS_v1.2</div>
+    <div style="font-size: 0.7rem;">STATUS: <span style="color: #00F2FF; animation: blink 1.5s infinite;">CONNECTING...</span></div>
 </header>
 
 <div id="chat-container">
-    <div class="message ai-message" id="initial-msg">
-        左様でございますか。あなたの健康状態をデバッグするため、いくつかお聞きいたします。
+    <div class="message ai-message">
+        左様でございますか。では、あなたの健康状態をデバッグするため、いくつかお聞きいたします。
         <br><br>
-        <strong>第一の質問：</strong> その症状は、あなたの「総死亡率（寿命）」に直接影響を及ぼす可能性があると、科学的根拠に基づいて判断されていますか？
+        <strong>第一の質問：</strong> 現在、日常生活に支障が出るほどの「痛み」や「違和感」を自覚されていますか？
     </div>
 </div>
 
 <div class="controls">
-    <button onclick="handleAnswer('YES')">YES</button>
-    <button onclick="
+    <button id="btn-yes" onclick="handleAnswer('YES')">YES</button>
+    <button id="btn-no" onclick="handleAnswer('NO')">NO</button>
+</div>
+
+<script src="script.js"></script>
+
+<script>
+    /* script.js が読み込めなかった場合、または HTML単体でテストする場合の
+       簡易フォールバック（動作確認用）
+    */
+    if (typeof handleAnswer !== 'function') {
+        window.handleAnswer = function(ans) {
+            const chat = document.getElementById('chat-container');
+            const userMsg = document.createElement('div');
+            userMsg.className = 'message user-message';
+            userMsg.style.alignSelf = 'flex-end';
+            userMsg.style.color = '#00F2FF';
+            userMsg.innerText = ans;
+            chat.appendChild(userMsg);
+            
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.className = 'message ai-message';
+                aiMsg.innerHTML = "解析中... script.js の接続を確認してください。ｗ";
+                chat.appendChild(aiMsg);
+                chat.scrollTop = chat.scrollHeight;
+            }, 500);
+        };
+    }
+</script>
+
+</body>
+</html>
