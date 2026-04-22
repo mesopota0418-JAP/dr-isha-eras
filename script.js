@@ -5,7 +5,7 @@
 
 // ⚠️ 注意: 本番環境（Vercel等）では環境変数を使用し、
 // クライアント側にAPIキーを直接記述しないことがエビデンスに基づいた安全策です。
-const API_KEY = import.meta.env.YOUR_GOOGLE_AI_STUDIO_API_KEY ;
+const API_KEY = import.meta.env.YOUR_GOOGLE_AI_STUDIO_API_KEY;
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
 const chatContainer = document.getElementById('chat-container');
